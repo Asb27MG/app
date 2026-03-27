@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
+import { apiUrl } from '@/lib/api';
 
 interface DeleteAccountModalProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ export function DeleteAccountModal({ isOpen, onClose, userEmail }: Readonly<Dele
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/delete-account', {
+      const response = await fetch(apiUrl('/api/auth/delete-account'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

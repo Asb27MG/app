@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Eye, EyeOff, Lock, User, Mail, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
+import { apiUrl } from '@/lib/api';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -115,7 +116,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
     setResendLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/resend-code', {
+      const response = await fetch(apiUrl('/api/auth/resend-code'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

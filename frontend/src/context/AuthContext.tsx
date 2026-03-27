@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import type { User, AuthContextType } from '@/types';
+import { apiUrl } from '@/lib/api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,7 +17,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
   const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
   const register = useCallback(async (name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch(apiUrl('/api/auth/register'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
   const verifyCode = useCallback(async (email: string, code: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch('/api/auth/verify-code', {
+      const response = await fetch(apiUrl('/api/auth/verify-code'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

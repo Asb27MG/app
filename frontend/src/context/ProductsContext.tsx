@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import type { Product, ProductsContextType } from '@/types';
 import { useAuth } from './AuthContext';
+import { apiUrl } from '@/lib/api';
 
 const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
 
@@ -12,7 +13,7 @@ export function ProductsProvider({ children }: Readonly<{ children: React.ReactN
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products');
+        const response = await fetch(apiUrl('/api/products'));
         const data = await response.json();
         
         if (data.success && data.products && data.products.length > 0) {
@@ -140,7 +141,7 @@ export function ProductsProvider({ children }: Readonly<{ children: React.ReactN
     }
 
     try {
-      const response = await fetch('/api/products', {
+      const response = await fetch(apiUrl('/api/products'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +175,7 @@ export function ProductsProvider({ children }: Readonly<{ children: React.ReactN
     }
 
     try {
-      const response = await fetch(`/api/products/${id}`, {
+      const response = await fetch(apiUrl(`/api/products/${id}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -208,7 +209,7 @@ export function ProductsProvider({ children }: Readonly<{ children: React.ReactN
     }
 
     try {
-      const response = await fetch(`/api/products/${id}`, {
+      const response = await fetch(apiUrl(`/api/products/${id}`), {
         method: 'DELETE',
         headers: {
           'x-user-role': user.role,

@@ -13,6 +13,17 @@ npm install      # install dependencies (only once)
 npm run dev      # start Vite dev server (http://localhost:5173)
 ```
 
+To connect the frontend to a backend deployed on Render:
+
+1. Create a `frontend/.env` file from `frontend/.env.example`.
+2. Set your backend URL:
+
+```bash
+VITE_API_BASE_URL=https://your-backend-name.onrender.com
+```
+
+If `VITE_API_BASE_URL` is empty, the frontend will use relative `/api` routes (useful with local Vite proxy in development).
+
 To build the frontend for production:
 
 ```bash

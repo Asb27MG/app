@@ -3,6 +3,7 @@ import { X, Trash2, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { apiUrl } from '@/lib/api';
 
 interface CartPanelProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ export function CartPanel({ isOpen, onClose }: Readonly<CartPanelProps>) {
     setSubmitMessage('');
 
     try {
-      const response = await fetch('/api/cotizacion', {
+      const response = await fetch(apiUrl('/api/cotizacion'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

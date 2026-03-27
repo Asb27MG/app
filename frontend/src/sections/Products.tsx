@@ -8,6 +8,7 @@ import { useProducts } from '@/context/ProductsContext';
 import { ProductFormModal } from '@/components/ProductFormModal';
 import { useTranslation } from 'react-i18next';
 import type { Product } from '@/types';
+import { apiUrl } from '@/lib/api';
 
 interface CotizationFormData {
   nombre: string;
@@ -176,7 +177,7 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
     }
 
     try {
-      const response = await fetch('/api/cotizacion', {
+      const response = await fetch(apiUrl('/api/cotizacion'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

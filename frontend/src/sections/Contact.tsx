@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, MapPin, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { apiUrl } from '@/lib/api';
 
 interface ContactResponse {
   success?: boolean;
@@ -40,7 +41,7 @@ function Contact({ scrollToSection }: { readonly scrollToSection?: (sectionId: s
     }
 
     try {
-      const response = await fetch('/api/contacto', {
+      const response = await fetch(apiUrl('/api/contacto'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

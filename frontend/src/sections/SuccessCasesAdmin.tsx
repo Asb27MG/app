@@ -25,6 +25,7 @@ import { useAuth } from '@/context/AuthContext';
 import { SuccessCaseFormModal } from '@/components/SuccessCaseFormModal';
 import type { SuccessCase } from '@/types';
 import { useTranslation } from 'react-i18next';
+import { apiUrl } from '@/lib/api';
 
 const industries = [
   { id: 'all', labelKey: 'successcases-industry-all', icon: Filter },
@@ -58,7 +59,7 @@ export default function SuccessCasesAdmin({ scrollToSection }: Readonly<SuccessC
     try {
       setLoading(true);
       setErrorMessage('');
-      const response = await fetch('/api/success-cases');
+      const response = await fetch(apiUrl('/api/success-cases'));
       const data = await response.json();
 
       if (!response.ok || !data.success) {
@@ -101,7 +102,7 @@ export default function SuccessCasesAdmin({ scrollToSection }: Readonly<SuccessC
     const isEditing = !!editingCase;
     const endpoint = isEditing ? `/api/success-cases/${editingCase.id}` : '/api/success-cases';
 
-    const response = await fetch(endpoint, {
+    const response = await fetch(apiUrl(endpoint), {
       method: isEditing ? 'PUT' : 'POST',
       headers: {
         'x-user-role': user.role,
@@ -126,7 +127,7 @@ export default function SuccessCasesAdmin({ scrollToSection }: Readonly<SuccessC
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`/api/success-cases/${id}`, {
+      const response = await fetch(apiUrl(`/api/success-cases/${id}`), {
         method: 'DELETE',
         headers: {
           'x-user-role': user.role,
