@@ -1,0 +1,565 @@
+:root{
+    --azul:#0098DA;
+    --oscuro:#373435;
+}
+
+body{
+    font-family:'Montserrat', sans-serif;
+    padding: 80px 0; /* para compensar navbar fixed */
+}
+
+/* NAVBAR */
+.navbar{
+    background:rgb(255, 255, 255);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    padding: 0 20px;
+    height: 80px;
+}
+.navbar-brand img{
+    height: 100px;
+    width: auto;
+
+}
+
+.btn-azul{
+    background:var(--azul);
+    color:white;
+    font-weight:600;
+}
+
+.btn-azul:hover{
+    background:#007bb3;
+    color:rgb(255, 255, 255);
+}
+
+/* SERVICES SECTION */
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.servicios-section {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.section-header h2 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.section-header span {
+  color: #2f8cff;
+}
+
+.section-header p {
+  color: #8aa0b8;
+  font-size: 18px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.services-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.tab {
+  padding: 14px 22px;
+  border-radius: 10px;
+  border: 1px solid #2f7df6;
+  background: transparent;
+  color: #2f7df6;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab:hover {
+  background: #2f8cff22;
+}
+
+.tab.active {
+  background: #2f8cff;
+  color: white;
+}
+
+.service-content {
+  display: none;
+  background: #0c1624;
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid #2f8cff33;
+}
+
+.service-content.active {
+  display: block;
+}
+
+.service-content h3 {
+
+  font-size: 28px;
+  margin-bottom: 10px;
+
+}
+
+.service-content p {
+
+  color: #8aa0b8;
+  margin-bottom: 20px;
+
+}
+
+.service-content ul {
+
+  list-style: none;
+  padding: 0;
+
+}
+
+.service-content li {
+
+  margin-bottom: 10px;
+  color: #cfe6ff;
+
+}
+
+/* Adapt service content to light mode (match contacto styling) */
+body.light-mode .service-content {
+  background: rgba(255,255,255,0.95);
+  color: #1f2937;
+  border: 1px solid rgba(0,119,255,0.12);
+}
+
+body.light-mode .service-content h3 {
+  color: #0b1220;
+}
+
+body.light-mode .service-content p,
+body.light-mode .service-content li {
+  color: #334155;
+}
+
+/* ===================================================== */
+/* Styles imported from contacto.css to replicate design */
+/* ===================================================== */
+
+/* ===================================================== */
+/* ===================== HERO ========================== */
+/* ===================================================== */
+
+.contact-hero{
+  padding:140px 20px 100px 20px;
+  text-align:center;
+  position:relative;
+  overflow: hidden; /* contain glow pseudo-element */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+/* contenedor */
+.hero-content{
+   max-width:800px;
+  margin:auto;
+  position: relative;
+  z-index: 2;
+  
+}
+
+/* badge superior */
+.hero-badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:20px;
+
+  background:rgba(0,212,255,0.1);
+  border:1px solid rgba(0,212,255,0.3);
+
+  color:#00d4ff;
+}
+
+/* titulo principal */
+.hero-title{
+
+  font-size:56px;
+  font-weight:700;
+
+  /* use logo colors: light and primary blue */
+  background:linear-gradient(
+   90deg,
+    #157a8e 10%,
+    #4fdcff 50%,
+    #137b90 90%
+  );
+
+ 
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  margin-bottom:15px;
+
+  text-shadow:0 0 25px rgba(0,212,255,0.25);
+
+}
+
+/* linea decorativa */
+.hero-line{
+
+  width:80px;
+  height:3px;
+
+  margin:20px auto;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #00d4ff,
+    transparent
+  );
+
+  border-radius:10px;
+
+}
+
+/* subtitulo */
+.hero-subtitle{
+
+  font-size:18px;
+  color:#a0a8b8;
+
+  max-width:600px;
+  margin:auto;
+
+  line-height:1.6;
+
+}
+/* ===================================================== */
+/* ============== MODO CLARO (LIGHT) ================== */
+/* ===================================================== */
+
+body.light-mode {
+  background-size: 400% 400%;
+  animation: fondoClaroAnimado 18s ease infinite;
+}
+
+@keyframes fondoClaroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body.light-mode .contact-hero {
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at top left, rgba(47,125,246,0.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 40%);
+}
+
+body.light-mode h1 {
+  color: #1e3a8a !important;
+}
+
+body.light-mode h2,
+body.light-mode h3 {
+  color: #1f2937 !important;
+}
+
+body.light-mode p,
+body.light-mode li {
+  color: #334155 !important;
+}
+
+/* ===================================================== */
+/* ============== MODO OSCURO (DARK) ================== */
+/* ===================================================== */
+
+/* Dark theme triggers when light-mode class is absent on body */
+body:not(.light-mode) {
+  background-size: 400% 400%;
+  animation: fondoOscuroAnimado 18s ease infinite;
+}
+
+@keyframes fondoOscuroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body:not(.light-mode) .contact-hero {
+  background-color: #0b1220;
+  background-image:
+    radial-gradient(circle at top left, rgba(47,125,246,0.35), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 35%);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p {
+  color: #ffffff !important;
+}
+
+/* ===================================================== */
+/* ================== FORMULARIO ====================== */
+/* ===================================================== */
+
+.contacto-section {
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.card-glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  transition: all 0.3s ease;
+}
+
+.card-glass:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.5),
+    0 0 25px rgba(47,125,246,0.15);
+}
+
+.card-glass h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+.form-control,
+.form-select {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background: rgba(255,255,255,0.1);
+  border-color: #2f7df6;
+  box-shadow: 0 0 0 3px rgba(47,125,246,0.2);
+  color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+textarea {
+  resize: none;
+}
+
+/* ===================================================== */
+/* =============== MODO CLARO FORMULARIO ============== */
+/* ===================================================== */
+
+body.light-mode .card-glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 119, 255, 0.15);
+}
+
+body.light-mode .form-control,
+body.light-mode .form-select {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 119, 255, 0.2);
+  color: #1f2937;
+}
+
+body.light-mode .form-control:focus,
+body.light-mode .form-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+body.light-mode .form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* ===================================================== */
+/* ==================== RESPONSIVE ==================== */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 15px;
+    min-height: 70vh;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .contacto-section {
+    padding: 60px 15px;
+  }
+
+  .card-glass {
+    padding: 30px 20px !important;
+  }
+}
+
+.form-subtitle {
+  opacity: 0.7;
+  font-size: 0.95rem;
+}   
+
+.form-control {
+  height: 48px;
+}
+
+textarea.form-control {
+  height: auto;
+}
+
+.form-control:hover {
+  border-color: rgba(47,125,246,0.4);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-info {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.contact-info h2 {
+  font-weight: 700;
+}
+
+.contact-description {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.contact-item span {
+  font-size: 1.4rem;
+}
+
+.contact-item p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(47, 125, 246, 0.1);
+  color: #2f7df6;
+  flex-shrink: 0;
+}
+/* --- Spacing and hero arrow for Servicios --- */
+.contact-hero .hero-title {
+  margin-bottom: 28px; /* increase separation from subtitle */
+}
+
+.services-section {
+  padding-top: 600px; /* push the content further down from hero */
+}
+
+.section-header {
+  margin-top: 200px;
+  margin-bottom: 80px;
+}
+
+.section-header h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.section-header p {
+  font-size: 18px;
+  color: #a0a8b8;
+  max-width: 700px;
+  margin: auto;
+}
+
+body.light-mode .section-header h2 {
+  color: #1f2937 !important;
+}
+
+body.light-mode .section-header p {
+  color: #334155 !important;
+}
+
+.hero-arrow{
+  margin-top: 30px;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-arrow .arrow{
+  display:inline-block;
+  width:18px;
+  height:18px;
+  border-left:3px solid rgba(255,255,255,0.9);
+  border-bottom:3px solid rgba(255,255,255,0.9);
+  transform: rotate(-45deg);
+  opacity:0.95;
+  animation: arrowBounce 1.6s infinite;
+}
+
+@keyframes arrowBounce{
+  0% { transform: rotate(-45deg) translateY(0); opacity:0.9 }
+  50% { transform: rotate(-45deg) translateY(8px); opacity:1 }
+  100% { transform: rotate(-45deg) translateY(0); opacity:0.9 }
+}
+
+/* light-mode adjustments for arrow and spacing */
+body.light-mode .contact-hero .hero-title {
+  margin-bottom: 28px;
+}
+
+body.light-mode .hero-arrow .arrow{
+  border-left:3px solid rgba(11,18,32,0.85);
+  border-bottom:3px solid rgba(11,18,32,0.85);
+}
+
+@media (max-width: 768px) {
+  .services-section { padding-top: 280px; }
+  .contact-hero .hero-title { font-size: 36px; }
+}

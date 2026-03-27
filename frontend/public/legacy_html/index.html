@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMH</title>
+
+
+<link rel="icon" type="image/png" href="../img/logo_gmh.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+<div id="pageLoader">
+  <div class="water-loader">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+  <div class="container d-flex justify-content-between align-items-center">
+
+    <a class="navbar-brand" href="../html/index.html">
+      <img src="../img/logo_gmh.png" alt="GMH Logo" class="logo-img">
+    </a>
+
+    <div class="d-flex align-items-center gap-2">
+      <!-- Botón Menú Hamburguesa -->
+     <button class="navbar-toggler" type="button" id="menuToggle">
+  <span class="navbar-toggler-icon">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </span>
+</button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- MENÚ LATERAL PERSONALIZADO -->
+<div id="sideMenu" class="side-menu">
+  <ul class="navbar-nav">
+    <li class="nav-item"><a class="nav-link" href="../html/index.html">Inicio</a></li>
+    <li class="nav-item"><a class="nav-link" href="../html/nosotros.html">Nosotros</a></li>
+    <li class="nav-item"><a class="nav-link" href="../html/servicios.html">Servicios</a></li>
+    <li class="nav-item"><a class="nav-link" href="../html/contacto.html">Contacto</a></li>
+
+    <li class="nav-item mt-4 mb-4">
+      <label class="theme-switch">
+        <input type="checkbox" id="themeButton">
+        <span class="slider"></span>
+      </label>
+    </li>
+
+    <li class="nav-item">
+      <button id="abrirFormulario" class="btn btn-azul w-100">
+        Solicitar Cotización
+      </button>
+    </li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero d-flex align-items-center text-white">
+  <div class="container text-center">
+    <span class="badge bg-primary mb-3">Integrador Tecnológico</span>
+
+    <h1 class="display-4 fw-bold">
+      Infraestructura Tecnológica para Entornos Críticos
+    </h1>
+
+    <p class="mt-4 opacity-75" style="max-width: 600px; margin: 1rem auto;">
+      Diseñamos, implementamos e integramos soluciones de conectividad,
+      seguridad electrónica y automatización.
+    </p>
+
+    <div class="mt-4">
+      <a href="../html/contacto.html" class="btn btn-primary me-3">
+        Solicitar reunión técnica →
+      </a>
+
+      <a href="../html/nosotros.html" class="btn btn-outline-light">
+        Sobre Nosotros
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="corporativo-section">
+  <!-- centered flex column for desktop/mobile -->
+  <div class="corporativo-container d-flex flex-column align-items-center justify-content-center">
+    
+    <div class="camara-box">
+      <img src="../img/camara.png" alt="Cámara de Seguridad" class="camara-img">
+    </div>
+
+    <div class="corporativo-texto">
+      <h2>Soluciones de Seguridad Industrial</h2>
+      <p>
+        Implementamos sistemas avanzados de videovigilancia, control de acceso 
+        y monitoreo inteligente para industrias, corporativos y grandes 
+        superficies. Nuestra tecnología garantiza protección 24/7, 
+        análisis en tiempo real y gestión centralizada.
+      </p>
+
+      <ul>
+        <li>✔ Monitoreo remoto inteligente</li>
+        <li>✔ Integración con sistemas industriales</li>
+        <li>✔ Protección perimetral avanzada</li>
+        <li>✔ Soporte técnico especializado</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+<section class="afiliadas-section">
+  <div class="afiliadas-container text-center">
+
+    <h2 class="afiliadas-title">Empresas Afiliadas</h2>
+
+    <div class="logos-grid">
+
+      <div class="logo-item">
+        <img src="../img/Levono.png" alt="Empresa 1">
+      </div>
+
+      <div class="logo-item">
+        <img src="../img/oracle.png" alt="Empresa 2">
+      </div>
+
+      <div class="logo-item">
+        <img src="../img/google.png" alt="Empresa 3">
+      </div>
+
+      
+
+    </div>
+
+  </div>
+</section>
+<!-- OFFCANVAS ORIGINAL TUYO (NO CAMBIAMOS IDS) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cotizacionPanel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Solicitar Cotización</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+
+    <form id="formCotizacion">
+
+      <div class="mb-3">
+        <label for="cot_nombre">Nombre</label>
+        <input type="text" id="cot_nombre" name="nombre" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="cot_correo">Correo Electrónico</label>
+        <input type="email" id="cot_correo" name="correo" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="cot_telefono">Teléfono</label>
+        <input type="tel" id="cot_telefono" name="telefono" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="cot_servicio">Tipo de Servicio</label>
+        <select id="cot_servicio" name="servicio" class="form-select">
+          <option>Diseño Estructural</option>
+          <option>Tecnología</option>
+          <option>Montaje y Mantenimiento</option>
+          <option>Proyecto Llave en Mano</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="cot_descripcion">Descripción</label>
+        <textarea id="cot_descripcion" name="descripcion" class="form-control"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">
+        Enviar Cotización
+      </button>
+
+    </form>
+
+  </div>
+</div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/contacto.js"></script>
+<script src="../js/cotizacion.js"></script>
+
+</body>
+</html>

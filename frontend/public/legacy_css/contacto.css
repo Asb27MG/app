@@ -1,0 +1,536 @@
+/* ===================================================== */
+/* ===================== HERO ========================== */
+/* ===================================================== */
+
+.contact-hero{
+  padding:140px 20px 100px 20px;
+  text-align:center;
+  position:relative;
+  overflow: hidden; /* contain glow pseudo-element */
+}
+
+/* glow element placed behind content */
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.35; /* visible corner glow */
+  background-color: #0b1220;
+  background-image:
+    radial-gradient(circle at top left, rgba(47,125,246,0.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 40%);
+}
+
+/* contenedor */
+.hero-content{
+  max-width:800px;
+  margin:auto;
+  position: relative;
+  z-index: 2; /* ensure content sits above ::before glow */
+}
+
+/* badge superior */
+.hero-badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:20px;
+
+  background:rgba(0,212,255,0.1);
+  border:1px solid rgba(0,212,255,0.3);
+
+  color:#00d4ff;
+}
+
+/* titulo principal */
+.hero-title{
+  font-size:56px;
+  font-weight:700;
+  margin-bottom:15px;
+
+  /* gradiente visible en fondo oscuro */
+  background: linear-gradient(
+    90deg,
+    #157a8e 10%,
+    #4fdcff 50%,
+    #137b90 90%
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  /* brillo para mejor visibilidad */
+  text-shadow: 0 0 20px rgba(0,212,255,0.35);
+
+  position: relative;
+  z-index: 2;
+}
+
+/* Prevent theme rules from hiding the title */
+body.light-mode .contact-hero .hero-title,
+body.dark-mode .contact-hero .hero-title {
+  color: inherit;
+}
+
+/* mobile scaling for hero title */
+@media (max-width: 768px) {
+  .contact-hero .hero-title { font-size: 36px; }
+}
+
+.contacto-section{
+  padding-top:80px;
+}
+/* linea decorativa */
+.hero-line{
+
+  width:80px;
+  height:3px;
+
+  margin:20px auto;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #00d4ff,
+    transparent
+  );
+
+  border-radius:10px;
+
+}
+
+/* subtitulo */
+.hero-subtitle{
+
+  font-size:18px;
+  color:#a0a8b8;
+
+  max-width:600px;
+  margin:auto;
+
+  line-height:1.6;
+
+}
+/* ===================================================== */
+/* ============== MODO CLARO (LIGHT) ================== */
+/* ===================================================== */
+
+body.light-mode {
+  background-size: 400% 400%;
+  animation: fondoClaroAnimado 18s ease infinite;
+}
+
+@keyframes fondoClaroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+body.light-mode h1 {
+  color: #1e3a8a !important; 
+}
+
+/* Override theme h1 for hero-title to show gradient */
+body.light-mode .contact-hero .hero-title {
+  color: transparent !important;
+}
+
+body.light-mode h2,
+body.light-mode h3 {
+  color: #1f2937 !important;
+}
+
+body.light-mode p,
+body.light-mode li {
+  color: #334155 !important;
+}
+
+/* ===================================================== */
+/* ============== MODO OSCURO (DARK) ================== */
+/* ===================================================== */
+
+
+@keyframes fondoOscuroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+body.dark-mode h1:not(.hero-title),
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p {
+  color: #ffffff !important;
+}
+
+/* Override theme h1 for hero-title to show gradient */
+body.dark-mode .contact-hero .hero-title {
+  color: transparent !important;
+}
+
+.contacto-section {
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.card-glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  transition: all 0.3s ease;
+}
+
+.card-glass:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.5),
+    0 0 25px rgba(47,125,246,0.15);
+}
+
+.card-glass h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+  
+
+
+
+.form-control::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+textarea {
+  resize: none;
+}
+
+/* ===================================================== */
+/* =============== MODO CLARO FORMULARIO ============== */
+/* ===================================================== */
+
+body.light-mode .card-glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 119, 255, 0.15);
+}
+
+body.light-mode .form-control,
+body.light-mode .form-select {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 119, 255, 0.2);
+  color: #1f2937;
+}
+
+body.light-mode .form-control:focus,
+body.light-mode .form-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+body.light-mode .form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* ===================================================== */
+/* ==================== RESPONSIVE ==================== */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 15px;
+    min-height: 70vh;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .contacto-section {
+    padding: 60px 15px;
+  }
+
+  .card-glass {
+    padding: 30px 20px !important;
+  }
+}
+
+.form-subtitle {
+  opacity: 0.7;
+  font-size: 0.95rem;
+}   
+
+.form-control {
+  height: 48px;
+}
+
+textarea.form-control {
+  height: auto;
+}
+
+.form-control:hover {
+  border-color: rgba(47,125,246,0.4);
+}
+.card-glass {
+  animation: fadeUp 0.7s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-azul {
+  background: linear-gradient(135deg, #2f7df6, #1e40af) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-azul::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.btn-azul:hover::after {
+  opacity: 1;
+}
+.contact-info {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+.contact-info h2{
+  font-weight: 700;
+}
+
+.contact-description{
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.contact-item{
+  display:flex;
+  gap:15px;
+  margin-bottom:20px;
+  align-items:flex-start;
+}
+
+.contact-item span{
+  font-size:1.4rem;
+}
+
+.contact-item p{
+  margin:0;
+  opacity:0.7;
+}   
+
+.contact-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
+  background: rgba(47,125,246,0.1);
+
+  color:#2f7df6;
+
+  flex-shrink:0;
+}
+
+.contact-item{
+  display:flex;
+  gap:15px;
+  margin-bottom:25px;
+}
+/* layout lado a lado */
+.contact-wrapper{
+  display:flex;
+  gap:60px;
+  align-items:center;
+  justify-content:center;
+  max-width:1000px;
+  margin:auto;
+}
+
+/* columnas */
+.contact-info{
+  flex:1;
+  text-align:center;
+}
+
+.contact-form{
+  flex:1;
+}
+
+/* títulos */
+.contact-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.contact-subtitle{
+  color:#aaa;
+  margin-bottom:30px;
+}
+
+/* items */
+.contact-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  margin-bottom:25px;
+}
+
+/* iconos svg */
+.contact-icon{
+  width:32px;
+  height:32px;
+  color:#00d4ff;
+  margin-bottom:10px;
+}
+
+/* texto */
+.contact-text strong{
+  display:block;
+  font-size:16px;
+}
+
+.contact-text p{
+  margin:0;
+  color:#aaa;
+}
+
+/* responsive */
+@media(max-width:768px){
+
+  .contact-wrapper{
+    flex-direction:column;
+    gap:40px;
+  }
+
+}
+
+/* --- Spacing and hero arrow for Contacto --- */
+.contact-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* glow handled by ::before pseudo-element */
+}
+
+.contacto-section {
+  padding-top: 600px; /* push the content further down from hero */
+  padding-bottom: 80px;
+}
+
+.hero-arrow {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.hero-arrow .arrow {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-left: 3px solid rgba(255,255,255,0.9);
+  border-bottom: 3px solid rgba(255,255,255,0.9);
+  transform: rotate(-45deg);
+  opacity: 0.95;
+  animation: arrowBounce 1.6s infinite;
+}
+
+@keyframes arrowBounce {
+  0% { transform: rotate(-45deg) translateY(0); opacity: 0.9 }
+  50% { transform: rotate(-45deg) translateY(8px); opacity: 1 }
+  100% { transform: rotate(-45deg) translateY(0); opacity: 0.9 }
+}
+
+/* Hide form section on load and reveal on scroll/click */
+.contacto-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.contacto-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* light-mode adjustments for arrow */
+body.light-mode .hero-arrow .arrow {
+  border-left: 3px solid rgba(11,18,32,0.85);
+  border-bottom: 3px solid rgba(11,18,32,0.85);
+}
+
+@media (max-width: 768px) {
+  .contact-hero {
+    min-height: 80vh;
+  }
+  
+  .contacto-section {
+    padding-top: 280px;
+  }
+}
+/* light-mode gradients on ::before to sit behind content */
+body.light-mode .contact-hero::before {
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at top left, rgba(0,152,218,0.6), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(0,152,218,0.6), transparent 25%);
+}
+
+/* dark theme using absence of light-mode, like servicios.css */
+body:not(.light-mode) {
+  background-size: 400% 400%;
+  animation: fondoOscuroAnimado 18s ease infinite;
+}
+
+body:not(.light-mode) .contact-hero::before {
+  background-color: #0b1220;
+  background-image:
+    radial-gradient(circle at top left, rgba(0,200,255,0.8), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 25%);
+}
+
+/* headings/text color for dark mode follows same rule as servicios */
+

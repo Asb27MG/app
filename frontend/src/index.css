@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+    --primary: 200 100% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 5% 95%;
+    --secondary-foreground: 30 5% 21%;
+    --accent: 200 100% 43%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 20% 90%;
+    --input: 215 20% 90%;
+    --ring: 215 60% 25%;
+    --radius: 0.5rem;
+    
+    --gmh-blue: 200 100% 43%;
+    --gmh-blue-light: 200 90% 55%;
+    --gmh-blue-dark: 200 100% 35%;
+    --gmh-gray: 30 5% 21%;
+    --gmh-gray-light: 30 5% 35%;
+    --gmh-gray-dark: 30 5% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .gradient-overlay {
+    background: linear-gradient(to right, rgba(20, 40, 80, 0.95) 0%, rgba(20, 40, 80, 0.7) 50%, rgba(20, 40, 80, 0.3) 100%);
+  }
+  .gradient-overlay-bottom {
+    background: linear-gradient(to top, rgba(20, 40, 80, 0.9) 0%, rgba(20, 40, 80, 0.4) 50%, transparent 100%);
+  }
+}

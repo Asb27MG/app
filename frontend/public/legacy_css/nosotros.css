@@ -1,0 +1,623 @@
+/* ===================================================== */
+/* ================== RESET GENERAL ==================== */
+/* ===================================================== */
+
+:root {
+  --azul:#0098DA;
+  --oscuro:#373435;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background 0.5s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===================================================== */
+/* ===================== NAVBAR ======================== */
+/* ===================================================== */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+}
+
+nav img {
+  height: 50px;
+}
+
+/* ===================================================== */
+/* ===================== HERO ========================== */
+/* ===================================================== */
+
+.hero {
+  position: relative;
+  padding: 140px 20px 100px 20px;
+  text-align: center;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate; /* keep pseudo-element compositing inside the hero */
+}
+
+/* glow pseudo-element from contacto design */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* sit behind the content */
+  pointer-events: none;
+  opacity: 0.22; /* reduce intensity so text stays crisp */
+  background-color: #0b1220;
+  background-image:
+    radial-gradient(circle at top left, rgba(47,125,246,0.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 40%);
+}
+
+.hero .container {
+  position: relative;
+  z-index: 3; /* keep content above the glow */
+}
+
+.hero h1 {
+  font-size:56px;
+  font-weight:700;
+  margin-bottom:15px;
+  background: linear-gradient(
+    90deg,
+     #157a8e 10%,
+    #4fdcff 50%,
+    #137b90 90%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* same glow as index for consistency */
+  text-shadow: 0 0 20px rgba(0,212,255,0.35);
+  position: relative;
+  z-index: 4; /* ensure the title sits above the glow */
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin:auto;
+}
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 36px; }
+}
+
+/* ===================================================== */
+/* ============== MODO CLARO (LIGHT) ================== */
+/* ===================================================== */
+
+body.light-mode {
+  background: linear-gradient(
+    -45deg,
+    #eaf4ff,
+    #d6e9ff,
+    #c2ddff,
+    #f0f7ff
+  );
+  background-size: 400% 400%;
+  animation: fondoClaroAnimado 18s ease infinite;
+}
+
+@keyframes fondoClaroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* light-mode glow override */
+body.light-mode .hero::before {
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at top left, rgba(0,152,218,0.6), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(0,152,218,0.6), transparent 40%);
+}
+
+
+/* TEXTO LIGHT */
+
+body.light-mode h1 {
+  color: #1e3a8a !important;
+}
+
+/* prevent theme color from hiding gradient title */
+body.light-mode .hero h1 {
+  color: transparent !important;
+}
+
+body.light-mode h2,
+body.light-mode h3 {
+  color: #1f2937 !important;
+}
+
+body.light-mode p,
+body.light-mode li {
+  color: #334155 !important;
+}
+
+/* ===================================================== */
+/* ============== MODO OSCURO (DARK) ================== */
+/* ===================================================== */
+
+body.dark-mode {
+  background: linear-gradient(
+    -45deg,
+    #0f2027,
+    #203a43,
+    #2c5364,
+    #1c1c2e
+  );
+  background-size: 400% 400%;
+  animation: fondoOscuroAnimado 18s ease infinite;
+}
+
+/* dark-mode glow override */
+body.dark-mode .hero::before {
+  background-color: #0b1220;
+  background-image:
+    radial-gradient(circle at top left, rgba(0,200,255,0.8), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,0.35), transparent 20%);
+}
+
+@keyframes fondoOscuroAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode li {
+  color: #ffffff !important;
+}
+
+/* override for hero title gradient */
+body.dark-mode .hero h1 {
+  color: transparent !important;
+}
+
+/* ===================================================== */
+/* =================== BOTONES ========================= */
+/* ===================================================== */
+
+button {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* ===================================================== */
+/* ================== ESTADÍSTICAS ===================== */
+/* ===================================================== */
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.stats h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================================================== */
+/* ================== EFECTOS EXTRA ==================== */
+/* ===================================================== */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: aparecer 0.8s ease forwards;
+}
+
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ===================================================== */
+/* ================== HABILIDADES ====================== */
+/* ===================================================== */
+
+.habilidades-section {
+  padding: 100px 10%;
+  text-align: center;
+}
+
+.habilidades-title {
+  font-size: 2.5rem;
+  margin-bottom: 60px;
+  font-weight: 800;
+}
+
+/* CONTENEDOR FLEX HORIZONTAL */
+
+.habilidades-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* CARD */
+
+.habilidad-card {
+  flex: 1 1 280px;
+  max-width: 320px;
+  padding: 30px;
+  border-radius: 20px;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  cursor: pointer;
+}
+
+/* ICONO */
+
+.habilidad-card .icono {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+/* TEXTO */
+
+.habilidad-card h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.habilidad-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ================== HOVER EFECTO PROYECCIÓN AZUL ================== */
+
+.habilidad-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(0, 119, 255, 0.4);
+}
+
+/* ===================================================== */
+/* =============== MODO CLARO ========================== */
+/* ===================================================== */
+
+body.light-mode .habilidad-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 119, 255, 0.15);
+}
+
+body.light-mode .habilidad-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 119, 255, 0.35);
+}
+
+/* ===================================================== */
+/* =============== MODO OSCURO ========================= */
+/* ===================================================== */
+
+body.dark-mode .habilidad-card {
+  background: rgba(20, 30, 48, 0.6);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+}
+
+body.dark-mode .habilidad-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 180, 255, 0.5);
+}
+/* ===================================================== */
+/* ===== ANIMACIÓN IZQUIERDA A DERECHA ================= */
+/* ===================================================== */
+
+.animar-izquierda {
+  opacity: 0;
+  transform: translateX(-80px);
+  animation: entrarIzquierda 1.2s ease forwards;
+}
+
+@keyframes entrarIzquierda {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* ===================================================== */
+/* ===== COLOR CORRECTO QUIÉNES SOMOS ================= */
+/* ===================================================== */
+
+/* MODO CLARO */
+body.light-mode .animar-izquierda h2 {
+  color: #1e3a8a !important;   /* Azul corporativo fuerte */
+}
+
+body.light-mode .animar-izquierda p {
+  color: #1f2937 !important;   /* Gris oscuro elegante */
+}
+
+/* MODO OSCURO */
+body.dark-mode .animar-izquierda h2,
+body.dark-mode .animar-izquierda p {
+  color: #f3eded !important;
+}
+/* ===================================================== */
+/* ============ SECCIÓN QUIÉNES SOMOS ================= */
+/* ===================================================== */
+
+.quienes-section {
+  padding: 120px 10%;
+}
+
+.quienes-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+/* LADO IZQUIERDO */
+
+.quienes-text {
+  flex: 1;
+  max-width: 600px;
+}
+
+.quienes-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  font-weight: 800;
+}
+
+.quienes-text p {
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+/* Animación entrada izquierda */
+
+.animar-izquierda {
+  opacity: 0;
+  transform: translateX(-80px);
+  animation: entrarIzquierda 1.2s ease forwards;
+}
+
+@keyframes entrarIzquierda {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===================================================== */
+/* ================== ANIMACIÓN CÁMARA ================= */
+/* ===================================================== */
+
+.quienes-animacion {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.camara {
+  width: 200px;
+  height: 120px;
+  background: #111;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 119, 255, 0.3);
+  animation: encenderCamara 2s ease-in-out infinite alternate;
+}
+
+.lente {
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, #0ea5e9, #1e3a8a);
+  border-radius: 50%;
+  position: absolute;
+  top: 25px;
+  left: 65px;
+  animation: brillarLente 3s ease-in-out infinite;
+}
+
+.luz {
+  width: 15px;
+  height: 15px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  animation: parpadear 1.5s infinite;
+}
+
+/* Animaciones */
+
+@keyframes encenderCamara {
+  from {
+    box-shadow: 0 0 20px rgba(0, 119, 255, 0.2);
+  }
+  to {
+    box-shadow: 0 0 60px rgba(0, 119, 255, 0.6);
+  }
+}
+
+@keyframes brillarLente {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes parpadear {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* ===================================================== */
+/* ================= MODO CLARO ======================== */
+/* ===================================================== */
+
+body.light-mode .quienes-text h2 {
+  color: #1e3a8a;
+}
+
+body.light-mode .quienes-text p {
+  color: #334155;
+}
+
+/* ===================================================== */
+/* ================= MODO OSCURO ======================= */
+/* ===================================================== */
+
+body.dark-mode .quienes-text h2,
+body.dark-mode .quienes-text p {
+  color: #ffffff;
+}
+
+body.dark-mode .camara {
+  background: #1f2937;
+}
+.icono-capacidad {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Modo claro */
+body.light-mode .icono-capacidad {
+  color: #2563eb;
+}
+
+/* Modo oscuro */
+body.dark-mode .icono-capacidad {
+  color: #00b4ff;
+}
+
+/* Hover animado */
+.habilidad-card:hover .icono-capacidad {
+  transform: scale(1.15);
+}
+/* ===================================================== */
+/* ============== INDUSTRIAS Y SECTORES ================ */
+/* ===================================================== */
+
+.sectores-section {
+  padding: 100px 10%;
+  text-align: center;
+}
+
+.sectores-title {
+  font-size: 2.5rem;
+  margin-bottom: 60px;
+  font-weight: 800;
+}
+
+.sectores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.sector-card {
+  flex: 1 1 280px;
+  max-width: 320px;
+  padding: 30px;
+  border-radius: 20px;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  cursor: pointer;
+}
+
+.icono-sector {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.sector-card h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.sector-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.sector-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(0, 119, 255, 0.4);
+}
+
+.sector-card:hover .icono-sector {
+  transform: scale(1.15);
+}
+
+body.light-mode .sector-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 119, 255, 0.15);
+}
+
+body.light-mode .sector-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 119, 255, 0.35);
+}
+
+body.light-mode .icono-sector {
+  color: #2563eb;
+}
+
+body.dark-mode .sector-card {
+  background: rgba(20, 30, 48, 0.6);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+}
+
+body.dark-mode .sector-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 180, 255, 0.5);
+}
+
+body.dark-mode .icono-sector {
+  color: #00b4ff;
+}
