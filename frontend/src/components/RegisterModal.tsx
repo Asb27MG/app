@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { X, Eye, EyeOff, Lock, User, Mail, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { apiUrl } from '@/lib/api';
+import { useTranslation } from 'react-i18next';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface RegisterModalProps {
 }
 
 export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<RegisterModalProps>) {
+  const { t } = useTranslation();
   const [step, setStep] = useState<'register' | 'verify'>('register');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,16 +30,16 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
   if (!isOpen) return null;
 
   const validateRegisterForm = () => {
-    if (!name.trim()) return 'El nombre es requerido.';
-    if (!email.trim()) return 'El correo electrónico es requerido.';
+    if (!name.trim()) return t('auth-register-error-name-required');
+    if (!email.trim()) return t('auth-register-error-email-required');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return 'Por favor ingresa un email válido (ejemplo: usuario@dominio.com)';
-    if (password.length < 6) return 'La contraseña debe tener al menos 6 caracteres.';
-    if (password !== confirmPassword) return 'Las contraseñas no coinciden.';
+    if (!emailRegex.test(email)) return t('auth-login-error-email');
+    if (password.length < 6) return t('auth-register-error-password-length');
+    if (password !== confirmPassword) return t('auth-register-error-password-match');
     return null;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');
@@ -53,33 +55,33 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
     try {
       const result = await register(name, email, password);
       if (result.success) {
-        setSuccess('¡Registro exitoso! Revisa tu correo para el código de confirmación.');
+        setSuccess(t('auth-register-success'));
         setTimeout(() => {
           setStep('verify');
           setSuccess('');
         }, 1500);
       } else {
-        setError(result.error || 'Error al registrar. Intenta de nuevo.');
+        setError(result.error || t('auth-register-error-generic'));
       }
     } catch {
-      setError('Error al registrar. Intenta de nuevo.');
+      setError(t('auth-register-error-generic'));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleVerifyCode = async (e: React.FormEvent) => {
+  const handleVerifyCode = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
     if (!confirmationCode.trim()) {
-      setError('Por favor ingresa el código de confirmación.');
+      setError(t('auth-verify-error-code-required'));
       return;
     }
 
     if (confirmationCode.length !== 6) {
-      setError('El código debe tener 6 dígitos.');
+      setError(t('auth-verify-error-code-length'));
       return;
     }
 
@@ -89,7 +91,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
       const result = await verifyCode(email, confirmationCode);
       
       if (result.success) {
-        setSuccess('¡Correo verificado! Tu cuenta está lista.');
+        setSuccess(t('auth-verify-success'));
         setTimeout(() => {
           setName('');
           setEmail('');
@@ -101,10 +103,10 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
           onClose();
         }, 1500);
       } else {
-        setError(result.error || 'Código inválido o expirado.');
+        setError(result.error || t('auth-verify-error-invalid'));
       }
     } catch {
-      setError('Error al verificar el código. Intenta de nuevo.');
+      setError(t('auth-verify-error-generic'));
     } finally {
       setIsLoading(false);
     }
@@ -129,12 +131,12 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Código reenviado a tu correo electrónico.');
+        setSuccess(t('auth-verify-resend-success'));
       } else {
-        setError(data.message || 'Error al reenviar el código.');
+        setError(data.message || t('auth-verify-resend-error'));
       }
     } catch {
-      setError('Error al reenviar el código. Intenta de nuevo.');
+      setError(t('auth-verify-resend-error'));
     } finally {
       setResendLoading(false);
     }
@@ -163,7 +165,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
           }
         }}
         type="button"
-        aria-label="Cerrar modal"
+        aria-label={t('auth-close-modal')}
       />
 
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full z-10">
@@ -171,7 +173,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
             onClick={handleClose}
             className="absolute top-4 right-4 p-2 hover:bg-slate-100 rounded-full transition-colors"
             type="button"
-            aria-label="Cerrar"
+            aria-label={t('auth-close')}
           >
             <X className="w-5 h-5 text-slate-600" />
           </button>
@@ -180,23 +182,23 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
             {step === 'register' ? (
               <>
                 <h2 className="text-3xl font-bold text-slate-900 mb-2 text-center">
-                  Crear Cuenta
+                  {t('auth-register-title')}
                 </h2>
                 <p className="text-center text-slate-600 mb-6">
-                  Regístrate para acceder a cotizaciones personalizadas
+                  {t('auth-register-subtitle')}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-slate-900 mb-1">
-                      Nombre Completo
+                      {t('auth-name-label')}
                     </label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                       <input
                         id="name"
                         type="text"
-                        placeholder="Tu nombre"
+                        placeholder={t('auth-name-placeholder')}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
@@ -207,14 +209,14 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
 
                   <div>
                     <label htmlFor="email" className="block text-sm font-semibold text-slate-900 mb-1">
-                      Correo electrónico
+                      {t('auth-email-label')}
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                       <input
                         id="email"
                         type="email"
-                        placeholder="tu@email.com"
+                        placeholder={t('auth-email-placeholder')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
@@ -225,7 +227,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
 
                   <div>
                     <label htmlFor="password" className="block text-sm font-semibold text-slate-900 mb-1">
-                      Contraseña
+                      {t('auth-password-label')}
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -242,7 +244,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                        aria-label="Alternar visibilidad de contraseña"
+                        aria-label={t('auth-toggle-password-visibility')}
                       >
                         {showPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -255,7 +257,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
 
                   <div>
                     <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-900 mb-1">
-                      Confirmar Contraseña
+                      {t('auth-confirm-password-label')}
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -272,7 +274,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                        aria-label="Alternar visibilidad de confirmación"
+                        aria-label={t('auth-toggle-confirm-password-visibility')}
                       >
                         {showConfirmPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -301,12 +303,12 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                       disabled={isLoading}
                       className="w-full bg-gradient-to-r from-blue-600 to-slate-700 text-white hover:shadow-lg transition-all disabled:opacity-50"
                     >
-                      {isLoading ? 'Registrando...' : 'Crear Cuenta'}
+                      {isLoading ? t('auth-register-loading') : t('auth-register-title')}
                     </Button>
                   </div>
 
                   <p className="text-center text-sm text-slate-600 mt-4">
-                    ¿Ya tienes cuenta?{' '}
+                    {t('auth-register-have-account')}{' '}
                     <button
                       type="button"
                       onClick={() => {
@@ -320,7 +322,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                       }}
                       className="text-blue-600 hover:text-blue-700 font-semibold"
                     >
-                      Inicia sesión
+                      {t('auth-register-switch-login')}
                     </button>
                   </p>
                 </form>
@@ -332,10 +334,10 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                     <Mail className="w-8 h-8 text-blue-600" />
                   </div>
                   <h2 className="text-3xl font-bold text-slate-900 mb-2">
-                    Verificar Correo
+                    {t('auth-verify-title')}
                   </h2>
                   <p className="text-center text-slate-600 mb-2">
-                    Enviamos un código de confirmación a
+                    {t('auth-verify-subtitle')}
                   </p>
                   <p className="text-center text-slate-900 font-semibold">
                     {email}
@@ -345,12 +347,12 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                 <form onSubmit={handleVerifyCode} className="space-y-4">
                   <div>
                     <label htmlFor="code" className="block text-sm font-semibold text-slate-900 mb-1">
-                      Código de Confirmación
+                      {t('auth-verify-code-label')}
                     </label>
                     <input
                       id="code"
                       type="text"
-                      placeholder="000000"
+                      placeholder={t('auth-verify-code-placeholder')}
                       value={confirmationCode}
                       onChange={(e) => setConfirmationCode(e.target.value.replaceAll(/\D/g, '').slice(0, 6))}
                       maxLength={6}
@@ -358,7 +360,7 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                       required
                     />
                     <p className="text-center text-sm text-slate-500 mt-2">
-                      Ingresa los 6 dígitos que recibiste por correo
+                      {t('auth-verify-code-hint')}
                     </p>
                   </div>
 
@@ -381,19 +383,19 @@ export function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Readonly<Reg
                       disabled={isLoading}
                       className="w-full bg-gradient-to-r from-blue-600 to-slate-700 text-white hover:shadow-lg transition-all disabled:opacity-50"
                     >
-                      {isLoading ? 'Verificando...' : 'Verificar Correo'}
+                      {isLoading ? t('auth-verify-loading') : t('auth-verify-title')}
                     </Button>
                   </div>
 
                   <p className="text-center text-sm text-slate-600 mt-4">
-                    ¿No recibiste el código?{' '}
+                    {t('auth-verify-no-code')}{' '}
                     <button
                       type="button"
                       onClick={handleResendCode}
                       disabled={resendLoading}
                       className="text-blue-600 hover:text-blue-700 font-semibold disabled:opacity-50"
                     >
-                      {resendLoading ? 'Reenviando...' : 'Reenviar'}
+                      {resendLoading ? t('auth-verify-resend-loading') : t('auth-verify-resend-button')}
                     </button>
                   </p>
                 </form>

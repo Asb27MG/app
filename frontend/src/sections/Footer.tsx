@@ -72,7 +72,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               </div>
               <div className="flex items-center gap-3 text-slate-300">
                 <Mail className="w-5 h-5 text-blue-300" />
-                <span>info@gmh-tech.com</span>
+                <span>Info@solucionesgmh.com</span>
               </div>
               <div className="flex items-center gap-3 text-slate-300">
                 <MapPin className="w-5 h-5 text-blue-300" />

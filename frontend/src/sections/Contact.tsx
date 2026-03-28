@@ -115,7 +115,7 @@ function Contact({ scrollToSection }: { readonly scrollToSection?: (sectionId: s
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 mb-1">{t('contact-email')}</h4>
-                <p className="text-slate-600">contacto@gmhtech.com</p>
+                <p className="text-slate-600">Info@solucionesgmh.com</p>
               </div>
             </div>
 

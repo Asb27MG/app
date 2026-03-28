@@ -9,6 +9,7 @@ import { ProductFormModal } from '@/components/ProductFormModal';
 import { useTranslation } from 'react-i18next';
 import type { Product } from '@/types';
 import { apiUrl } from '@/lib/api';
+import { localizeProduct } from '@/lib/contentLocalization';
 
 interface CotizationFormData {
   nombre: string;
@@ -45,7 +46,7 @@ function DetailModal({ product, isOpen, onClose, onOpenCotization }: Readonly<De
             onClose();
           }
         }}
-        aria-label="Cerrar modal"
+        aria-label={t('auth-close-modal')}
         type="button"
       />
 
@@ -111,7 +112,7 @@ function DetailModal({ product, isOpen, onClose, onOpenCotization }: Readonly<De
 
             <div className="flex gap-3 pt-6 border-t border-slate-200">
               <Button variant="outline" className="flex-1" onClick={onClose}>
-                Cerrar
+                {t('products-close')}
               </Button>
               <Button
                 className="flex-1 bg-gradient-to-r from-blue-600 to-slate-700 text-white hover:shadow-lg transition-all"
@@ -121,7 +122,7 @@ function DetailModal({ product, isOpen, onClose, onOpenCotization }: Readonly<De
                 }}
               >
                 <ShoppingCart className="w-4 h-4 mr-2" />
-                Solicitar Cotización
+                {t('products-solicitar-cotizacion')}
               </Button>
             </div>
           </div>
@@ -132,6 +133,7 @@ function DetailModal({ product, isOpen, onClose, onOpenCotization }: Readonly<De
 }
 
 function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalProps>) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<CotizationFormData>({
     nombre: '',
     correo: '',
@@ -170,7 +172,7 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
     const { nombre, correo, telefono, servicio, descripcion } = formData;
 
     if (!nombre || !correo) {
-      setMessage('Por favor completa los campos requeridos (Nombre y Correo).');
+      setMessage(t('products-quote-required-fields'));
       setMessageType('error');
       setLoading(false);
       return;
@@ -195,14 +197,14 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
         data = text ? JSON.parse(text) : {};
       } catch (err) {
         console.error('JSON inválido de /api/cotizacion:', text, err);
-        setMessage('Ocurrió un error inesperado. Revisa la consola.');
+        setMessage(t('products-quote-unexpected-error'));
         setMessageType('error');
         setLoading(false);
         return;
       }
 
       if (response.ok && data?.success) {
-        setMessage(data.message || 'Cotización enviada correctamente');
+        setMessage(data.message || t('products-quote-success'));
         setMessageType('success');
         setFormData({
           nombre: '',
@@ -216,12 +218,12 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
         }, 2000);
       } else {
         console.error('Error enviando cotización:', response.status, data);
-        setMessage(data?.message || 'Ocurrió un error al enviar la cotización');
+        setMessage(data?.message || t('products-quote-submit-error'));
         setMessageType('error');
       }
     } catch (error) {
       console.error('Error de red al enviar cotización:', error);
-      setMessage('No se pudo conectar con el servidor');
+      setMessage(t('products-quote-network-error'));
       setMessageType('error');
     } finally {
       setLoading(false);
@@ -238,7 +240,7 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
             onClose();
           }
         }}
-        aria-label="Cerrar modal"
+        aria-label={t('auth-close-modal')}
         type="button"
       />
 
@@ -250,16 +252,16 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
 
           <div className="p-8">
             <div className="mb-6">
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">Solicitar Cotización</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">{t('products-solicitar-cotizacion')}</h2>
               <p className="text-slate-600">
-                Completa el formulario para recibir una propuesta personalizada para <span className="font-semibold text-blue-600">{product.name}</span>
+                {t('products-quote-description-prefix')} <span className="font-semibold text-blue-600">{product.name}</span>
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="nombre" className="block text-sm font-semibold text-slate-900 mb-1">
-                  Nombre completo *
+                  {t('products-quote-name-label')}
                 </label>
                 <input
                   id="nombre"
@@ -268,14 +270,14 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
                   value={formData.nombre}
                   onChange={handleChange}
                   required
-                  placeholder="Tu nombre"
+                  placeholder={t('auth-name-placeholder')}
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
 
               <div>
                 <label htmlFor="correo" className="block text-sm font-semibold text-slate-900 mb-1">
-                  Correo electrónico *
+                  {t('products-quote-email-label')}
                 </label>
                 <input
                   id="correo"
@@ -284,14 +286,14 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
                   value={formData.correo}
                   onChange={handleChange}
                   required
-                  placeholder="tu.email@empresa.com"
+                  placeholder={t('products-quote-email-placeholder')}
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
 
               <div>
                 <label htmlFor="telefono" className="block text-sm font-semibold text-slate-900 mb-1">
-                  Teléfono
+                  {t('products-quote-phone-label')}
                 </label>
                 <input
                   id="telefono"
@@ -306,7 +308,7 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
 
               <div>
                 <label htmlFor="servicio" className="block text-sm font-semibold text-slate-900 mb-1">
-                  Producto/Servicio
+                  {t('products-quote-product-label')}
                 </label>
                 <input
                   id="servicio"
@@ -314,14 +316,14 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
                   type="text"
                   value={formData.servicio}
                   onChange={handleChange}
-                  placeholder="Producto seleccionado"
+                  placeholder={t('products-quote-product-placeholder')}
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
 
               <div>
                 <label htmlFor="descripcion" className="block text-sm font-semibold text-slate-900 mb-1">
-                  Descripción del proyecto
+                  {t('products-quote-project-label')}
                 </label>
                 <textarea
                   id="descripcion"
@@ -329,7 +331,7 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
                   value={formData.descripcion}
                   onChange={handleChange}
                   rows={4}
-                  placeholder="Cuéntanos más sobre tu proyecto..."
+                  placeholder={t('products-quote-project-placeholder')}
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
                 />
               </div>
@@ -349,14 +351,14 @@ function CotizationModal({ product, isOpen, onClose }: Readonly<CotizationModalP
 
               <div className="flex gap-3 pt-2">
                 <Button variant="outline" className="flex-1" onClick={onClose} type="button">
-                  Cancelar
+                  {t('products-cancel')}
                 </Button>
                 <Button
                   type="submit"
                   disabled={loading}
                   className="flex-1 bg-gradient-to-r from-blue-600 to-slate-700 text-white hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Enviando...' : 'Enviar Cotización'}
+                  {loading ? t('products-quote-sending') : t('products-quote-submit')}
                 </Button>
               </div>
             </form>
@@ -374,7 +376,7 @@ export default function Products({
   readonly scrollToSection: (sectionId: string) => void;
   readonly searchQuery?: string;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isAuthenticated, user } = useAuth();
   const { addToCart } = useCart();
   const { products, addProduct, updateProduct, deleteProduct } = useProducts();
@@ -387,12 +389,17 @@ export default function Products({
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
+  const localizedProducts = useMemo(
+    () => products.map((product) => localizeProduct(product, i18n.resolvedLanguage ?? i18n.language)),
+    [products, i18n.language, i18n.resolvedLanguage],
+  );
+
   const normalizedSearch = searchQuery.trim().toLowerCase();
 
   const filteredProducts = useMemo(() => {
-    if (!normalizedSearch) return products;
+    if (!normalizedSearch) return localizedProducts;
 
-    return products.filter((product) => {
+    return localizedProducts.filter((product) => {
       const searchableParts = [
         product.name,
         product.description,
@@ -403,7 +410,7 @@ export default function Products({
 
       return searchableParts.join(' ').toLowerCase().includes(normalizedSearch);
     });
-  }, [products, normalizedSearch]);
+  }, [localizedProducts, normalizedSearch]);
 
   const itemsPerPage = 4;
   const maxIndex = Math.max(0, filteredProducts.length - itemsPerPage);
@@ -487,7 +494,7 @@ export default function Products({
           <div className="text-sm text-slate-600 font-medium">
             {filteredProducts.length > 0
               ? `${t('products-mostrando')} ${currentIndex + 1} - ${Math.min(currentIndex + itemsPerPage, filteredProducts.length)} ${t('products-de')} ${filteredProducts.length}`
-              : 'Sin resultados para la búsqueda actual'}
+              : t('products-no-results-current-search')}
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -522,7 +529,7 @@ export default function Products({
                       setIsFormOpen(true);
                     }}
                     className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    title="Editar"
+                    title={t('products-edit')}
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
@@ -584,7 +591,7 @@ export default function Products({
                       className="flex-1 border-gmh-blue text-gmh-blue hover:bg-gmh-blue hover:text-white transition-all"
                       onClick={() => openDetailModal(product)}
                     >
-                      <span className="text-xs">Ver Detalles</span>
+                      <span className="text-xs">{t('products-ver-detalles')}</span>
                       <ArrowRight className="w-3 h-3 ml-1" />
                     </Button>
                     <Button
@@ -593,7 +600,7 @@ export default function Products({
                       onClick={() => {
                         addToCart(product.id, product.name, product.category);
                         // Mostrar feedback visual
-                      alert(t('products-agregado-carrito'));
+                        alert(t('products-agregado-carrito'));
                       }}
                       title={t('products-agregar-carrito')}
                     >
@@ -609,8 +616,8 @@ export default function Products({
 
         {filteredProducts.length === 0 && (
           <div className="text-center mb-10">
-            <p className="text-slate-600 text-lg">No encontramos productos con esa búsqueda.</p>
-            <p className="text-slate-500 text-sm mt-1">Probá con otro término, categoría o especificación.</p>
+            <p className="text-slate-600 text-lg">{t('products-no-results-title')}</p>
+            <p className="text-slate-500 text-sm mt-1">{t('products-no-results-description')}</p>
           </div>
         )}
 
@@ -628,12 +635,12 @@ export default function Products({
           </div>
 
           <div className="text-center mt-4">
-            <p className="text-slate-600 mb-4">¿No encuentras lo que buscas? Contáctanos para conocer soluciones personalizadas.</p>
+            <p className="text-slate-600 mb-4">{t('products-custom-cta-text')}</p>
             <Button
               className="bg-gradient-to-r from-blue-600 to-slate-700 text-white hover:shadow-lg transition-all px-8 py-3"
               onClick={() => scrollToSection('contact')}
             >
-              Solicitar Cotización Personalizada
+              {t('products-custom-cta-button')}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
@@ -648,11 +655,11 @@ export default function Products({
         }} aria-label="Cerrar confirmación" type="button">
           <div className="fixed inset-0 bg-black/50"></div>
           <div className="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 p-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Confirmar eliminación</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">{t('products-confirm-delete-title')}</h3>
             <p className="text-slate-600 mb-6">{t('products-confirmar-eliminar')}</p>
             <div className="flex gap-3">
               <Button variant="outline" className="flex-1" onClick={() => setDeleteConfirm(null)}>
-                Cancelar
+                {t('products-cancel')}
               </Button>
               <Button
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white"
