@@ -4,11 +4,12 @@ const mysql = require("mysql2");
 const { execSync } = require("child_process");
 
 const dbHost = process.env.DB_HOST || "localhost";
+const dbPort = Number(process.env.DB_PORT || 3306);
 const dbUser = process.env.DB_USER || "root";
 const dbName = process.env.DB_NAME || "gmh_website";
 let dbPassword = process.env.DB_PASSWORD ?? "";
 
-console.log(`[DEBUG] MySQL Config - Host: ${dbHost}, User: "${dbUser}", DB: ${dbName}, Password: ${process.env.DB_PASSWORD ? "CONFIGURED" : "EMPTY"}`);
+console.log(`[DEBUG] MySQL Config - Host: ${dbHost}, Port: ${dbPort}, User: "${dbUser}", DB: ${dbName}, Password: ${process.env.DB_PASSWORD ? "CONFIGURED" : "EMPTY"}`);
 
 // Fallback macOS: intenta leer la clave de MySQL Workbench desde el llavero
 // cuando no hay DB_PASSWORD configurada.
@@ -41,6 +42,7 @@ if (missingDbEnv.length > 0) {
 
 const pool = mysql.createPool({
   host: dbHost,
+  port: dbPort,
   user: dbUser,
   password: dbPassword,
   database: dbName,
